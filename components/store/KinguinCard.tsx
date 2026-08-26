@@ -10,7 +10,7 @@ export function KinguinCard({ product }: { product: KinguinProduct }) {
       href={`/game/${product.kinguinId}`}
       className="group/card flex flex-col overflow-hidden rounded-card border border-hairline bg-surface transition-[border-color,transform] duration-[var(--ma-dur-base)] hover:-translate-y-0.5 hover:border-hairline-strong"
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-surface-2">
+      <div className="relative aspect-[8/7] overflow-hidden bg-surface-2">
         {product.coverImage ? (
           <Image
             src={product.coverImage}
