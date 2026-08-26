@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { tryGetProduct } from "@/lib/kinguin";
 import { bySlug, genres, platforms } from "@/lib/data";
@@ -9,6 +8,7 @@ import { Price } from "@/components/ui/Price";
 import { Icon } from "@/components/ui/Icon";
 import { PlatformChip, RegionChip, Rating } from "@/components/ui/Chips";
 import { BuyPanel } from "@/components/store/BuyPanel";
+import { Gallery } from "@/components/store/Gallery";
 import { AddToCartButton } from "@/components/store/AddToCartButton";
 import { policy } from "@/lib/brand";
 
@@ -99,31 +99,11 @@ export default async function GamePage({ params }: { params: Promise<Params> }) 
       <Shell>
         <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
           <div>
-            <div className="relative aspect-[16/9] overflow-hidden rounded-card border border-hairline bg-surface-2">
-              {product.coverImage ? (
-                <Image
-                  src={product.coverImage}
-                  alt={product.name}
-                  fill
-                  sizes="(max-width:1024px) 100vw, 640px"
-                  className="object-cover"
-                  priority
-                />
-              ) : (
-                <div className="flex h-full items-center justify-center text-ink-faint">
-                  <Icon name="controller" size={48} />
-                </div>
-              )}
-            </div>
-            {product.screenshots.length > 0 && (
-              <div className="mt-4 grid grid-cols-4 gap-2">
-                {product.screenshots.slice(0, 8).map((src, i) => (
-                  <div key={i} className="relative aspect-[16/9] overflow-hidden rounded-tile bg-surface-2">
-                    <Image src={src} alt="" fill sizes="160px" className="object-cover" />
-                  </div>
-                ))}
-              </div>
-            )}
+            <Gallery
+              cover={product.coverImage}
+              screenshots={product.screenshots}
+              title={product.name}
+            />
             {product.description && (
               <div
                 className="prose-invert mt-6 max-w-none text-sm leading-relaxed text-ink-muted [&_h2]:mt-4 [&_h2]:text-base [&_h2]:text-ink"

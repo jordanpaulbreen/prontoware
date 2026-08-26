@@ -12,7 +12,7 @@ export default async function WalletPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-2xl">Wallet</h1>
+      <h1 className="text-2xl">Balance</h1>
 
       <div className="rounded-card border border-hairline bg-gradient-to-br from-surface to-surface-2 p-6">
         <p className="text-xs uppercase tracking-wide text-ink-faint">Available balance</p>

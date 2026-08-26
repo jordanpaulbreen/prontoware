@@ -8,9 +8,6 @@ import { PaymentMarks } from "@/components/ui/PaymentMarks";
 import { Reveal } from "@/components/ui/Reveal";
 import { Shell } from "@/components/ui/Section";
 import { ThemeToggle } from "@/components/header/TopStrip";
-import { useCurrency } from "@/components/providers/StoreProvider";
-import { currencies } from "@/lib/data";
-import type { CurrencyCode } from "@/lib/format";
 import { brand, company } from "@/lib/brand";
 import { resolveLink } from "@/lib/links";
 
@@ -231,8 +228,6 @@ function TrustRow() {
 /* -------------------------------------------------------------------------- */
 
 function LegalBar() {
-  const { currency, setCurrency } = useCurrency();
-
   return (
     <>
       <div aria-hidden="true" className="hairline-gradient" />
@@ -257,22 +252,6 @@ function LegalBar() {
           </div>
 
           <div className="flex flex-wrap items-center gap-4">
-            <label className="flex items-center gap-2 text-xs text-ink-muted">
-              <span className="sr-only">Currency</span>
-              <Icon name="globe" size={14} />
-              <select
-                value={currency}
-                onChange={(event) => setCurrency(event.target.value as CurrencyCode)}
-                className="rounded-tile border border-hairline bg-surface px-2 py-1.5 text-xs text-ink"
-              >
-                {currencies.map((option) => (
-                  <option key={option.code} value={option.code}>
-                    {option.code}
-                  </option>
-                ))}
-              </select>
-            </label>
-
             <ThemeToggle />
           </div>
         </div>

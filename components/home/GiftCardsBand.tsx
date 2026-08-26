@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { giftCards, platforms } from "@/lib/data";
+import { giftCards } from "@/lib/data";
 import { useCurrency } from "@/components/providers/StoreProvider";
 import { moneyRound } from "@/lib/format";
 import { Button } from "@/components/ui/Button";
@@ -18,6 +18,9 @@ export function GiftCardsBand() {
     playstation: 25,
     xbox: 25,
     nintendo: 25,
+    netflix: 25,
+    roblox: 25,
+    uber: 25,
   });
 
   return (
@@ -34,7 +37,7 @@ export function GiftCardsBand() {
                 gift a key
               </span>
               <h2 id="gift-heading" className="text-2xl sm:text-[2rem]">
-                Wallet top-ups, delivered on the dot
+                Gift cards, delivered on the dot
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-ink-muted">
                 Send credit by email in seconds, or schedule it to land at midnight on the day
@@ -52,7 +55,7 @@ export function GiftCardsBand() {
                   </li>
                 ))}
               </ul>
-              <Button href="/giftcards" className="mt-6" sparkle>
+              <Button href="/gift-cards" className="mt-6" sparkle>
                 <Icon name="gift" size={17} />
                 Send a gift card
               </Button>
@@ -60,25 +63,24 @@ export function GiftCardsBand() {
 
             <ul className="grid gap-3 sm:grid-cols-2">
               {giftCards.map((card, index) => {
-                const meta = platforms[card.platform];
-                const amount = picked[card.platform] ?? card.amounts[0];
+                const amount = picked[card.key] ?? card.amounts[0];
                 return (
-                  <Reveal as="li" key={card.platform} delay={index * 60}>
+                  <Reveal as="li" key={card.key} delay={index * 60}>
                     <div
                       className="group/card relative flex h-full flex-col overflow-hidden rounded-card border border-hairline bg-card p-4 transition-[border-color,box-shadow] duration-[var(--ma-dur-slow)] hover:shadow-glow"
                       style={{
-                        backgroundImage: `radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, ${meta.token} 14%, transparent) 0%, transparent 60%)`,
+                        backgroundImage: `radial-gradient(120% 80% at 100% 0%, color-mix(in srgb, ${card.token} 14%, transparent) 0%, transparent 60%)`,
                       }}
                     >
                       <div className="flex items-center justify-between">
                         <span
                           className="inline-flex items-center gap-2 text-sm font-semibold"
-                          style={{ color: meta.token }}
+                          style={{ color: card.token }}
                         >
-                          <Icon name="controller" size={16} />
-                          {meta.name}
+                          <Icon name="gift" size={16} />
+                          {card.name}
                         </span>
-                        <span className="pixel-label text-ink-faint">wallet</span>
+                        <span className="pixel-label text-ink-faint">gift card</span>
                       </div>
 
                       <span className="mt-4 font-display text-3xl font-bold tracking-tight text-ink">
@@ -87,7 +89,7 @@ export function GiftCardsBand() {
 
                       <div
                         role="group"
-                        aria-label={`${meta.name} gift card amount`}
+                        aria-label={`${card.name} gift card amount`}
                         className="mt-3 flex flex-wrap gap-1.5"
                       >
                         {card.amounts.map((value) => (
@@ -96,7 +98,7 @@ export function GiftCardsBand() {
                             type="button"
                             aria-pressed={value === amount}
                             onClick={() =>
-                              setPicked((current) => ({ ...current, [card.platform]: value }))
+                              setPicked((current) => ({ ...current, [card.key]: value }))
                             }
                             className={`press rounded-chip border px-2.5 py-1.5 text-xs font-medium ${
                               value === amount

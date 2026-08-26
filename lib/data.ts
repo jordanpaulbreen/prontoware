@@ -961,11 +961,14 @@ export const faqs = [
   },
 ];
 
-export const giftCards = [
-  { platform: "steam" as PlatformId, amounts: [10, 20, 50, 100] },
-  { platform: "playstation" as PlatformId, amounts: [10, 25, 50, 100] },
-  { platform: "xbox" as PlatformId, amounts: [10, 25, 50] },
-  { platform: "nintendo" as PlatformId, amounts: [15, 25, 50] },
+export const giftCards: { key: string; name: string; token: string; amounts: number[] }[] = [
+  { key: "steam", name: "Steam", token: "var(--ma-steam)", amounts: [10, 20, 50, 100] },
+  { key: "playstation", name: "PlayStation Store", token: "var(--ma-playstation)", amounts: [10, 25, 50, 100] },
+  { key: "xbox", name: "Xbox", token: "var(--ma-xbox)", amounts: [10, 25, 50] },
+  { key: "nintendo", name: "Nintendo eShop", token: "var(--ma-nintendo)", amounts: [15, 25, 50] },
+  { key: "netflix", name: "Netflix", token: "#E50914", amounts: [15, 25, 50] },
+  { key: "roblox", name: "Roblox", token: "#00A2FF", amounts: [10, 25, 50] },
+  { key: "uber", name: "Uber", token: "#9CA3AF", amounts: [15, 25, 50] },
 ];
 
 export const currencies = [

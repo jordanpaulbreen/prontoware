@@ -7,7 +7,7 @@ import { Icon } from "@/components/ui/Icon";
 const links = [
   { href: "/account", label: "Dashboard", icon: "controller" as const },
   { href: "/account/orders", label: "Orders & keys", icon: "bolt" as const },
-  { href: "/account/wallet", label: "Wallet", icon: "badge" as const },
+  { href: "/account/wallet", label: "Balance", icon: "badge" as const },
   { href: "/wishlist", label: "Wishlist", icon: "heart" as const },
 ];
 

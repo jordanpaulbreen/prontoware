@@ -89,7 +89,7 @@ export function CheckoutForm({ user }: { user: PublicUser & { billingAddr: strin
                 disabled={walletBalance < subtotal}
               />
               <span className="flex-1">
-                Wallet balance
+                Balance
                 <span className="ml-2 text-xs text-ink-faint">
                   {money(walletBalance, currency)} available
                 </span>

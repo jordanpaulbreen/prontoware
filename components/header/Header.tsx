@@ -79,7 +79,7 @@ export function Header() {
                 <a
                   href="/account/wallet"
                   className="press hidden h-10 items-center gap-2 rounded-tile border border-cyan/40 bg-cyan-soft px-3 text-sm font-semibold text-cyan hover:brightness-110 sm:inline-flex"
-                  title="Wallet balance"
+                  title="Balance"
                 >
                   <Icon name="bolt" size={15} />
                   {money(user.balanceCents / 100, currency)}

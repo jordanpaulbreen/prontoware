@@ -17,7 +17,7 @@ export function PlatformQuickRail() {
             return (
               <li key={id} className="shrink-0">
                 <a
-                  href={`/platform/${id}`}
+                  href={`/platforms/${id}`}
                   className="press group inline-flex items-center gap-2.5 rounded-chip border border-hairline bg-surface-2 px-4 py-2.5 text-sm font-medium text-ink-muted hover:text-ink"
                   style={{ ["--chip" as string]: meta.token }}
                 >

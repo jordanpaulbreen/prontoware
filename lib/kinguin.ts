@@ -28,6 +28,10 @@ export type KinguinProduct = {
 
 type ListResult = { results: KinguinProduct[]; itemCount: number; page: number };
 
+// Retail markup applied to the wholesale Kinguin price shown and charged to buyers.
+const MARKUP = 1.3;
+const withMarkup = (wholesale: number) => Math.round(wholesale * MARKUP * 100) / 100;
+
 function headers() {
   return { "X-Api-Key": cfg.apiKey, "Content-Type": "application/json" } as const;
 }
@@ -67,7 +71,7 @@ function normalize(raw: Record<string, unknown>): KinguinProduct {
     publishers: arr(raw.publishers),
     releaseDate: raw.releaseDate as string | undefined,
     qty: Number(raw.qty ?? 0),
-    price: Number(raw.price ?? 0),
+    price: withMarkup(Number(raw.price ?? 0)),
     regionalLimitations: raw.regionalLimitations as string | undefined,
     regionId: raw.regionId ? String(raw.regionId) : undefined,
     languages: arr(raw.languages),

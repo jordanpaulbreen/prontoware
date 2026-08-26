@@ -70,7 +70,7 @@ export function BuyPanel({
           </label>
           <label className="flex items-center gap-2 rounded-tile border border-hairline bg-surface-2 px-3 py-2.5 text-sm">
             <input type="radio" name="payment" value="wallet" className="accent-cyan" />
-            <Icon name="bolt" size={15} /> Pay from wallet balance
+            <Icon name="bolt" size={15} /> Pay from balance
           </label>
         </fieldset>
 

@@ -38,7 +38,7 @@ export default async function AccountDashboard({
       )}
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <Stat label="Wallet balance" value={`€${(user.balanceCents / 100).toFixed(2)}`} icon="bolt" href="/account/wallet" />
+        <Stat label="Balance" value={`€${(user.balanceCents / 100).toFixed(2)}`} icon="bolt" href="/account/wallet" />
         <Stat label="Orders" value={String(orders.length)} icon="badge" href="/account/orders" />
         <Stat label="Member since" value={new Date(user.createdAt).getFullYear().toString()} icon="star" />
       </div>

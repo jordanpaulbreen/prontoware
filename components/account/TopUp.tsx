@@ -12,7 +12,7 @@ export function TopUp() {
 
   return (
     <form action={action} className="rounded-card border border-hairline bg-surface p-5">
-      <h2 className="text-lg">Top up your wallet</h2>
+      <h2 className="text-lg">Top up your balance</h2>
       <p className="mt-1 text-sm text-ink-muted">Add credit and check out in one tap next time.</p>
 
       <div className="mt-4 flex flex-wrap gap-2">
@@ -48,7 +48,7 @@ export function TopUp() {
         </Button>
       </div>
       {state.error && <p className="mt-2 text-xs text-magenta">{state.error}</p>}
-      {state.ok && <p className="mt-2 text-xs text-deal">Funds added to your wallet.</p>}
+      {state.ok && <p className="mt-2 text-xs text-deal">Funds added to your balance.</p>}
     </form>
   );
 }
