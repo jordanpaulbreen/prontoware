@@ -81,7 +81,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
             compact ? "text-[1.0625rem]" : "text-xl"
           }`}
         >
-          Midnight<span className="text-gradient"> Arcade</span>
+          Prontoware<span className="text-gradient"> Games</span>
         </span>
         {!compact && (
           <span className="pixel-label mt-1 text-ink-faint transition-colors duration-[var(--ma-dur-slow)] group-hover/logo:text-cyan">

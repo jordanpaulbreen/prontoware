@@ -2,9 +2,11 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Silkscreen, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { StoreProvider } from "@/components/providers/StoreProvider";
+import { getCurrentUser } from "@/lib/auth";
 import { BrandDefs } from "@/components/ui/BrandDefs";
 import { Header } from "@/components/header/Header";
 import { Footer } from "@/components/footer/Footer";
+import { CookieConsent } from "@/components/ui/CookieConsent";
 
 /* Display face: techy-playful, set large with tight tracking. */
 const spaceGrotesk = Space_Grotesk({
@@ -30,14 +32,15 @@ const silkscreen = Silkscreen({
 });
 
 export const metadata: Metadata = {
-  title: "Midnight Arcade — official game keys, delivered instantly",
+  metadataBase: new URL("https://prontowaregames.com"),
+  title: "Prontoware Games — official game keys, delivered instantly",
   description:
-    "Buy official Steam, Epic, Xbox, PlayStation and Nintendo keys at midnight prices. Instant email delivery, authorised distributors, 24/7 support.",
-  applicationName: "Midnight Arcade",
+    "Buy official Steam, Epic, Xbox, PlayStation and Nintendo keys at great prices. Instant email delivery, authorised distributors, 24/7 support.",
+  applicationName: "Prontoware Games",
   openGraph: {
-    title: "Midnight Arcade — official game keys, delivered instantly",
+    title: "Prontoware Games — official game keys, delivered instantly",
     description:
-      "Deals drop at midnight. Official keys, instant delivery, secure payment, 24/7 support.",
+      "Official keys, instant delivery, secure payment, 24/7 support.",
     type: "website",
   },
 };
@@ -57,7 +60,17 @@ export const viewport: Viewport = {
  */
 const themeScript = `(function(){try{var t=localStorage.getItem("ma-theme");if(t==="light"){document.documentElement.dataset.theme="light"}else{document.documentElement.dataset.theme="dark"}}catch(e){document.documentElement.dataset.theme="dark"}})();`;
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const current = await getCurrentUser();
+  const user = current
+    ? {
+        id: current.id,
+        email: current.email,
+        firstName: current.firstName,
+        lastName: current.lastName,
+        balanceCents: current.balanceCents,
+      }
+    : null;
   return (
     <html
       lang="en"
@@ -69,11 +82,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
       <body className="min-h-dvh bg-bg font-sans text-ink antialiased">
-        <StoreProvider>
+        <StoreProvider user={user}>
           <BrandDefs />
           <Header />
           <main id="main">{children}</main>
           <Footer />
+          <CookieConsent />
         </StoreProvider>
       </body>
     </html>

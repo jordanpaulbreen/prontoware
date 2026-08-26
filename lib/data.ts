@@ -613,7 +613,7 @@ export const nav: NavItem[] = [
           ],
         },
         {
-          title: "Also on Midnight",
+          title: "Also in store",
           links: [
             { label: "Subscriptions", note: "Game Pass, PS Plus" },
             { label: "In-game currency" },
@@ -698,7 +698,7 @@ export const nav: NavItem[] = [
           ],
         },
         {
-          title: "Midnight club",
+          title: "Rewards club",
           links: [
             { label: "Member prices", note: "Free to join" },
             { label: "Deals newsletter" },
@@ -741,7 +741,7 @@ export const nav: NavItem[] = [
         {
           title: "Editorial",
           links: [
-            { label: "Midnight review" },
+            { label: "Editor's review" },
             { label: "Release calendar" },
             { label: "What we're playing" },
           ],
@@ -869,14 +869,14 @@ export const promoStrip = [
 export const trustRibbon = [
   { icon: "bolt", label: "Instant email delivery" },
   { icon: "badge", label: "Official distributors" },
-  { icon: "shield", label: "Secure payment" },
-  { icon: "star", label: "4.7 / 5 · 38 402 reviews" },
+  { icon: "shield", label: "Secure payment · PCI DSS" },
+  { icon: "star", label: "Reviewed by verified buyers" },
 ];
 
 export const steps = [
   {
     title: "Buy in two taps",
-    body: "Card, PayPal, Apple Pay or crypto. No account required — checkout as a guest.",
+    body: "Pay securely by Visa or Mastercard. No account required — checkout as a guest.",
     label: "01 · insert coin",
   },
   {
@@ -900,7 +900,7 @@ export const benefits = [
   {
     icon: "bolt",
     title: "Instant delivery",
-    body: "97.4% of orders are delivered in under 60 seconds, day or night.",
+    body: "Most orders are delivered in under 60 seconds, day or night.",
   },
   {
     icon: "shield",
@@ -937,7 +937,7 @@ export const testimonials = [
 export const faqs = [
   {
     q: "How fast will I get my key?",
-    a: "Almost always instantly. As soon as payment clears, the key appears in your inbox and in your Midnight Arcade library. Pre-orders are delivered the moment the game unlocks.",
+    a: "Almost always instantly. As soon as payment clears, the key appears in your inbox and in your Prontoware Games library. Pre-orders are delivered the moment the game unlocks.",
   },
   {
     q: "Are these keys official?",
@@ -1004,12 +1004,11 @@ export const footerColumns = [
   {
     title: "Company",
     links: [
-      "About Midnight Arcade",
-      "The Midnight blog",
+      "About Prontoware Games",
+      "The Prontoware blog",
       "Affiliates & creators",
       "Careers",
       "Press kit",
-      "Sell your keys",
     ],
   },
 ];

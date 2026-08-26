@@ -29,3 +29,6 @@ yarn-error.log*
 .idea/
 .claude/
 .vercel
+
+# secrets — never commit
+addons/.env.credentials

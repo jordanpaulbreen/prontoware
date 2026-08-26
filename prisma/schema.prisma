@@ -1,0 +1,93 @@
+// Prontoware Games — data model.
+// Each project MUST use its own database (do not share a DB across sites).
+// Production: point DATABASE_URL at a dedicated Vercel Marketplace Postgres.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  firstName     String
+  lastName      String
+  phone         String
+  dateOfBirth   DateTime
+  street        String
+  city          String
+  country       String
+  postcode      String
+  emailVerified DateTime?
+  balanceCents  Int       @default(0)
+  createdAt     DateTime  @default(now())
+
+  orders        Order[]
+  sessions      Session[]
+  tokens        Token[]
+  ledger        LedgerEntry[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+// Email verification + password reset tokens.
+model Token {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind      String // "verify" | "reset"
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Order {
+  id          String      @id @default(cuid())
+  userId      String?
+  user        User?       @relation(fields: [userId], references: [id])
+  email       String
+  status      String      @default("paid") // pending | paid | delivered | refunded
+  currency    String      @default("EUR")
+  totalCents  Int
+  // Buyer legal snapshot for the invoice.
+  billingName String
+  billingAddr String
+  createdAt   DateTime    @default(now())
+
+  items       OrderItem[]
+}
+
+model OrderItem {
+  id           String  @id @default(cuid())
+  orderId      String
+  order        Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productSlug  String
+  productTitle String
+  platform     String
+  qty          Int     @default(1)
+  priceCents   Int
+  // The delivered game key (encrypted/plain depending on deployment).
+  gameKey      String?
+  kinguinId    String?
+}
+
+// Balance top-ups and spend history shown in the account.
+model LedgerEntry {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  kind        String // "topup" | "spend"
+  amountCents Int
+  note        String
+  createdAt   DateTime @default(now())
+}

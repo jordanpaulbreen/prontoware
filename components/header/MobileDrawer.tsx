@@ -1,7 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { nav } from "@/lib/data";
+
+const HREFS: Record<string, string> = {
+  platforms: "/platforms",
+  genres: "/genres",
+  deals: "/deals",
+  new: "/new",
+  preorders: "/preorders",
+  charts: "/charts",
+  giftcards: "/gift-cards",
+};
 import { useBodyScrollLock, useEscapeKey } from "@/lib/hooks";
 import { Icon } from "@/components/ui/Icon";
 import { KeyGlow, Logo } from "@/components/ui/KeyGlow";
@@ -21,7 +32,6 @@ export function MobileDrawer({
   open: boolean;
   onClose: () => void;
 }) {
-  const [section, setSection] = useState<string | null>("platforms");
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -92,88 +102,31 @@ export function MobileDrawer({
 
         <div className="ma-scroll flex-1 overflow-y-auto">
           <ul className="p-2">
-            {nav.map((item) => {
-              const expanded = section === item.id;
-              return (
-                <li key={item.id} className="border-b border-hairline/70 last:border-0">
-                  {item.panel ? (
-                    <>
-                      <button
-                        type="button"
-                        aria-expanded={expanded}
-                        aria-controls={`ma-drawer-${item.id}`}
-                        onClick={() => setSection(expanded ? null : item.id)}
-                        className="flex w-full items-center justify-between gap-2 rounded-tile px-3 py-3.5 text-left text-[0.9375rem] font-medium text-ink"
-                      >
-                        <span className="flex items-center gap-2">
-                          {item.label}
-                          {item.badge && (
-                            <span
-                              className="pixel-label rounded-[4px] px-1 py-0.5"
-                              style={{
-                                color:
-                                  item.badge === "hot" ? "var(--ma-magenta)" : "var(--ma-gold)",
-                                backgroundColor:
-                                  item.badge === "hot"
-                                    ? "var(--ma-magenta-soft)"
-                                    : "var(--ma-gold-soft)",
-                              }}
-                            >
-                              {item.badge}
-                            </span>
-                          )}
-                        </span>
-                        <Icon
-                          name="chevronDown"
-                          size={16}
-                          className={`text-ink-faint transition-transform duration-[var(--ma-dur-base)] ${
-                            expanded ? "rotate-180" : ""
-                          }`}
-                        />
-                      </button>
-
-                      <div
-                        id={`ma-drawer-${item.id}`}
-                        hidden={!expanded}
-                        className="grid animate-[panel-in_var(--ma-dur-base)_var(--ma-ease-arcade)] gap-4 px-3 pb-4"
-                      >
-                        {item.panel.columns.map((column) => (
-                          <div key={column.title}>
-                            <h3 className="pixel-label mb-2 text-cyan">{column.title}</h3>
-                            <ul className="space-y-0.5">
-                              {column.links.map((link) => (
-                                <li key={link.label}>
-                                  <a
-                                    href="#"
-                                    onClick={onClose}
-                                    className="flex items-baseline justify-between gap-3 rounded-[6px] px-2 py-2 text-sm text-ink-muted hover:bg-card-hover hover:text-ink"
-                                  >
-                                    {link.label}
-                                    {link.note && (
-                                      <span className="text-[0.6875rem] text-ink-faint">
-                                        {link.note}
-                                      </span>
-                                    )}
-                                  </a>
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                        ))}
-                      </div>
-                    </>
-                  ) : (
-                    <a
-                      href="#"
-                      onClick={onClose}
-                      className="block rounded-tile px-3 py-3.5 text-[0.9375rem] font-medium text-ink"
+            {nav.map((item) => (
+              <li key={item.id} className="border-b border-hairline/70 last:border-0">
+                <Link
+                  href={HREFS[item.id] ?? "/store"}
+                  onClick={onClose}
+                  className="flex items-center gap-2 rounded-tile px-3 py-3.5 text-[0.9375rem] font-medium text-ink"
+                >
+                  {item.label}
+                  {item.badge && (
+                    <span
+                      className="pixel-label rounded-[4px] px-1 py-0.5"
+                      style={{
+                        color: item.badge === "hot" ? "var(--ma-magenta)" : "var(--ma-gold)",
+                        backgroundColor:
+                          item.badge === "hot"
+                            ? "var(--ma-magenta-soft)"
+                            : "var(--ma-gold-soft)",
+                      }}
                     >
-                      {item.label}
-                    </a>
+                      {item.badge}
+                    </span>
                   )}
-                </li>
-              );
-            })}
+                </Link>
+              </li>
+            ))}
           </ul>
 
           <div className="mt-2 space-y-2 border-t border-hairline p-4">

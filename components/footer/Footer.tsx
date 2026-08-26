@@ -4,20 +4,20 @@ import { useState } from "react";
 import { footerColumns, platforms, platformOrder } from "@/lib/data";
 import { Icon } from "@/components/ui/Icon";
 import { KeyGlow, Logo } from "@/components/ui/KeyGlow";
+import { PaymentMarks } from "@/components/ui/PaymentMarks";
 import { Reveal } from "@/components/ui/Reveal";
 import { Shell } from "@/components/ui/Section";
 import { ThemeToggle } from "@/components/header/TopStrip";
 import { useCurrency } from "@/components/providers/StoreProvider";
 import { currencies } from "@/lib/data";
 import type { CurrencyCode } from "@/lib/format";
+import { brand, company } from "@/lib/brand";
+import { resolveLink } from "@/lib/links";
 
-const payments = ["Visa", "Mastercard", "PayPal", "Apple Pay", "Google Pay", "Klarna", "Crypto"];
-
-const socials: { label: string; icon: "discord" | "chat" | "send" | "play" }[] = [
-  { label: "Discord", icon: "discord" },
-  { label: "X", icon: "chat" },
-  { label: "Telegram", icon: "send" },
-  { label: "YouTube", icon: "play" },
+const socials: { label: string; icon: "discord" | "chat" | "send" | "play"; href: string }[] = [
+  { label: "Discord", icon: "discord", href: "https://discord.gg/prontowaregames" },
+  { label: "X", icon: "chat", href: "https://x.com/prontowaregames" },
+  { label: "YouTube", icon: "play", href: "https://youtube.com/@prontowaregames" },
 ];
 
 const legal = ["Privacy", "Terms", "Cookies", "Refund Policy", "Imprint"];
@@ -90,7 +90,7 @@ function NewsletterBand() {
                     required
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
-                    placeholder="you@midnight.gg"
+                    placeholder="you@example.com"
                     className="h-11 w-full rounded-tile border border-hairline bg-surface-2 pl-10 pr-3 text-sm text-ink placeholder:text-ink-faint transition-[border-color,box-shadow] duration-[var(--ma-dur-base)] hover:border-hairline-strong focus:border-transparent focus-visible:shadow-[0_0_0_1px_var(--ma-cyan),0_0_22px_-6px_var(--ma-cyan-glow)]"
                   />
                 </div>
@@ -167,7 +167,7 @@ function LinkColumns() {
                   {column.links.map((link) => (
                     <li key={link}>
                       <a
-                        href="#"
+                        href={resolveLink(link)}
                         className="block rounded-[6px] py-1.5 text-sm text-ink-muted transition-colors duration-[var(--ma-dur-base)] hover:text-cyan"
                       >
                         {link}
@@ -193,28 +193,15 @@ function TrustRow() {
       <Shell className="py-7">
         <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
           <div className="space-y-4">
-            <ul className="flex flex-wrap gap-1.5">
-              {payments.map((method) => (
-                <li
-                  key={method}
-                  className="rounded-[6px] border border-hairline bg-surface px-2.5 py-1.5 text-[0.6875rem] font-medium text-ink-muted"
-                >
-                  {method}
-                </li>
-              ))}
-            </ul>
+            <PaymentMarks size={30} />
             <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-xs text-ink-muted">
               <span className="inline-flex items-center gap-1.5">
                 <Icon name="shield" size={14} className="text-deal" />
-                Secure checkout · 3-D Secure
+                Secure checkout · 3-D Secure · PCI DSS
               </span>
               <span className="inline-flex items-center gap-1.5">
                 <Icon name="badge" size={14} className="text-cyan" />
                 Keys from authorised distributors
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <Icon name="star" size={14} className="text-gold" style={{ fill: "currentColor" }} />
-                4.7 / 5 · 38 402 reviews
               </span>
             </div>
           </div>
@@ -223,7 +210,9 @@ function TrustRow() {
             {socials.map((social) => (
               <li key={social.label}>
                 <a
-                  href="#"
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
                   aria-label={social.label}
                   title={social.label}
                   className="press inline-flex size-10 items-center justify-center rounded-tile border border-hairline bg-surface text-ink-muted hover:border-cyan hover:text-cyan"
@@ -251,12 +240,18 @@ function LegalBar() {
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div className="space-y-2 text-xs leading-relaxed text-ink-faint">
             <p>
-              © 2026 Midnight Arcade B.V. · Keizersgracht 241, 1016 EA Amsterdam · VAT
-              NL864217593B01 · KVK 89412677
+              © {new Date().getFullYear()} {company.legalName} · Reg. No. {company.regNumber} ·{" "}
+              {company.address}
+            </p>
+            <p>
+              Contact:{" "}
+              <a href={`mailto:${brand.contactEmail}`} className="hover:text-cyan">
+                {brand.contactEmail}
+              </a>
             </p>
             <p className="max-w-3xl">
               {platformOrder.map((id) => platforms[id].name).join(", ")} and all related marks are
-              trademarks of their respective owners. Midnight Arcade is an independent retailer and
+              trademarks of their respective owners. {brand.name} is an independent retailer and
               is not affiliated with, endorsed or sponsored by any platform holder or publisher.
             </p>
           </div>
@@ -278,19 +273,6 @@ function LegalBar() {
               </select>
             </label>
 
-            <label className="flex items-center gap-2 text-xs text-ink-muted">
-              <span className="sr-only">Language</span>
-              <select
-                defaultValue="en"
-                className="rounded-tile border border-hairline bg-surface px-2 py-1.5 text-xs text-ink"
-              >
-                <option value="en">English</option>
-                <option value="de">Deutsch</option>
-                <option value="pl">Polski</option>
-                <option value="uk">Українська</option>
-              </select>
-            </label>
-
             <ThemeToggle />
           </div>
         </div>
@@ -299,7 +281,7 @@ function LegalBar() {
           {legal.map((item) => (
             <li key={item}>
               <a
-                href="#"
+                href={resolveLink(item)}
                 className="text-xs text-ink-muted transition-colors duration-[var(--ma-dur-base)] hover:text-cyan"
               >
                 {item}

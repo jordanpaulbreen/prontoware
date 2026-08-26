@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useCart } from "@/components/providers/StoreProvider";
+import { useAuth, useCart, useCurrency } from "@/components/providers/StoreProvider";
+import { money } from "@/lib/format";
 import { Icon } from "@/components/ui/Icon";
 import { Logo } from "@/components/ui/KeyGlow";
+import { CurrencySwitcher } from "@/components/ui/CurrencySwitcher";
 import { MiniCart } from "./MiniCart";
 import { MobileDrawer } from "./MobileDrawer";
 import { NavRow } from "./NavRow";
@@ -20,6 +22,8 @@ export function Header() {
   const [condensed, setCondensed] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const { wishlist } = useCart();
+  const { user } = useAuth();
+  const { currency } = useCurrency();
 
   useEffect(() => {
     const onScroll = () => setCondensed(window.scrollY > 24);
@@ -60,8 +64,8 @@ export function Header() {
             }`}
           >
             <a
-              href="/"
-              aria-label="Midnight Arcade — home"
+              href={user ? "/account" : "/"}
+              aria-label={user ? "Prontoware Games — dashboard" : "Prontoware Games — home"}
               className="shrink-0 rounded-tile px-0.5 py-1"
             >
               <Logo compact={condensed} />
@@ -70,12 +74,23 @@ export function Header() {
             <SearchBar className="hidden flex-1 md:block" />
 
             <div className="ml-auto flex items-center gap-2">
+              <CurrencySwitcher className="hidden sm:inline-flex" />
+              {user && (
+                <a
+                  href="/account/wallet"
+                  className="press hidden h-10 items-center gap-2 rounded-tile border border-cyan/40 bg-cyan-soft px-3 text-sm font-semibold text-cyan hover:brightness-110 sm:inline-flex"
+                  title="Wallet balance"
+                >
+                  <Icon name="bolt" size={15} />
+                  {money(user.balanceCents / 100, currency)}
+                </a>
+              )}
               <a
-                href="/account"
+                href={user ? "/account" : "/login"}
                 className="press hidden h-10 items-center gap-2 rounded-tile border border-hairline bg-surface-2 px-3 text-sm font-medium text-ink-muted hover:border-hairline-strong hover:text-ink sm:inline-flex"
               >
                 <Icon name="user" size={17} />
-                <span className="hidden lg:inline">Account</span>
+                <span className="hidden lg:inline">{user ? user.firstName : "Log in"}</span>
               </a>
 
               <a
@@ -124,8 +139,8 @@ export function Header() {
               </span>
               <span aria-hidden="true" className="h-3.5 w-px bg-hairline" />
               <span className="inline-flex items-center gap-1.5">
-                <Icon name="star" size={14} className="text-gold" style={{ fill: "currentColor" }} />
-                4.7 / 5 on Trustpilot
+                <Icon name="shield" size={14} className="text-deal" />
+                Secure payment · PCI DSS
               </span>
             </div>
           </div>

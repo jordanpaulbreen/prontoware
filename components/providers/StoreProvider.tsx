@@ -56,6 +56,22 @@ function ThemeProvider({ children }: { children: React.ReactNode }) {
 export const useTheme = () => useContext(ThemeContext);
 
 /* --------------------------------------------------------------------------
+   Auth — current user is resolved on the server and handed down as a prop
+   -------------------------------------------------------------------------- */
+
+export type PublicUser = {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  balanceCents: number;
+};
+
+const AuthContext = createContext<{ user: PublicUser | null }>({ user: null });
+
+export const useAuth = () => useContext(AuthContext);
+
+/* --------------------------------------------------------------------------
    Currency
    -------------------------------------------------------------------------- */
 
@@ -113,13 +129,8 @@ function reducer(state: CartState, action: CartAction): CartState {
 }
 
 const initialState: CartState = {
-  // Two lines pre-seeded so the mini-cart and the count badge have something
-  // to show in this UI-only build.
-  lines: [
-    { game: games[0], qty: 1 },
-    { game: games[13], qty: 1 },
-  ],
-  wishlist: ["hollow-lantern", "eclipse-warden"],
+  lines: [],
+  wishlist: [],
   lastAdded: null,
 };
 
@@ -149,7 +160,13 @@ export const useCart = () => useContext(CartContext);
    Single mount point
    -------------------------------------------------------------------------- */
 
-export function StoreProvider({ children }: { children: React.ReactNode }) {
+export function StoreProvider({
+  children,
+  user = null,
+}: {
+  children: React.ReactNode;
+  user?: PublicUser | null;
+}) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [currency, setCurrencyState] = useState<CurrencyCode>("EUR");
 
@@ -182,11 +199,15 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const currencyValue = useMemo(() => ({ currency, setCurrency }), [currency, setCurrency]);
 
+  const authValue = useMemo(() => ({ user }), [user]);
+
   return (
     <ThemeProvider>
-      <CurrencyContext.Provider value={currencyValue}>
-        <CartContext.Provider value={cartValue}>{children}</CartContext.Provider>
-      </CurrencyContext.Provider>
+      <AuthContext.Provider value={authValue}>
+        <CurrencyContext.Provider value={currencyValue}>
+          <CartContext.Provider value={cartValue}>{children}</CartContext.Provider>
+        </CurrencyContext.Provider>
+      </AuthContext.Provider>
     </ThemeProvider>
   );
 }
