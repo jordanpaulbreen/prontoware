@@ -9,9 +9,8 @@ export async function GET() {
     await verifyMailer();
     return NextResponse.json({ ok: true, transport: "smtp", port: 587 });
   } catch (e) {
-    return NextResponse.json(
-      { ok: false, error: (e as Error).message },
-      { status: 503 },
-    );
+    // Log details server-side; keep the public response free of host/credential hints.
+    console.error("[health/mail] SMTP verify failed:", (e as Error).message);
+    return NextResponse.json({ ok: false }, { status: 503 });
   }
 }

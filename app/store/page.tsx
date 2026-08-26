@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { trySearchProducts } from "@/lib/kinguin";
-import { platformOrder, platforms } from "@/lib/data";
+import { trySearchProducts, retailToWholesale } from "@/lib/kinguin";
 import { KinguinCard } from "@/components/store/KinguinCard";
+import { StoreFilters } from "@/components/store/StoreFilters";
 import { Band, SectionHeading, Shell } from "@/components/ui/Section";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Button } from "@/components/ui/Button";
@@ -27,7 +27,7 @@ export default async function StorePage({
   const kinguin = await trySearchProducts({
     name: q || undefined,
     platform: platform || undefined,
-    priceTo: max,
+    priceTo: max ? retailToWholesale(max) : undefined,
     page,
     limit: 24,
     sortBy: "bestselling",
@@ -57,32 +57,7 @@ export default async function StorePage({
           description="Official keys for Steam, Epic, Xbox, PlayStation and Nintendo — delivered to your inbox in under 60 seconds."
         />
 
-        <form method="get" action="/store" className="mb-8 flex flex-wrap items-center gap-3">
-          <div className="relative flex-1 min-w-56">
-            <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-faint">
-              <Icon name="search" size={16} />
-            </span>
-            <input
-              name="q"
-              defaultValue={q}
-              placeholder="Search games…"
-              className="h-11 w-full rounded-tile border border-hairline bg-surface-2 pl-10 pr-3 text-sm text-ink focus:border-cyan focus:outline-none"
-            />
-          </div>
-          <select
-            name="platform"
-            defaultValue={platform}
-            className="h-11 rounded-tile border border-hairline bg-surface-2 px-3 text-sm text-ink focus:border-cyan focus:outline-none"
-          >
-            <option value="">All platforms</option>
-            {platformOrder.map((id) => (
-              <option key={id} value={platforms[id].name}>
-                {platforms[id].name}
-              </option>
-            ))}
-          </select>
-          <Button type="submit">Search</Button>
-        </form>
+        <StoreFilters q={q} platform={platform} max={max} />
 
         {products.length > 0 ? (
           <>

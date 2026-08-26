@@ -33,7 +33,10 @@ const silkscreen = Silkscreen({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://prontowaregames.com"),
-  title: "Prontoware Games — official game keys, delivered instantly",
+  title: {
+    default: "Prontoware Games — official game keys, delivered instantly",
+    template: "%s · Prontoware Games",
+  },
   description:
     "Buy official Steam, Epic, Xbox, PlayStation and Nintendo keys at great prices. Instant email delivery, authorised distributors, 24/7 support.",
   applicationName: "Prontoware Games",

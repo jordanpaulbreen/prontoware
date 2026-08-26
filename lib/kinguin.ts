@@ -29,8 +29,10 @@ export type KinguinProduct = {
 type ListResult = { results: KinguinProduct[]; itemCount: number; page: number };
 
 // Retail markup applied to the wholesale Kinguin price shown and charged to buyers.
-const MARKUP = 1.3;
+export const MARKUP = 1.3;
 const withMarkup = (wholesale: number) => Math.round(wholesale * MARKUP * 100) / 100;
+/** Convert a retail (marked-up) price cap back to the wholesale value the API filters on. */
+export const retailToWholesale = (retail: number) => retail / MARKUP;
 
 function headers() {
   return { "X-Api-Key": cfg.apiKey, "Content-Type": "application/json" } as const;
