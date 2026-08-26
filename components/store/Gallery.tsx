@@ -37,12 +37,13 @@ export function Gallery({
           type="button"
           onClick={() => setZoom(cover)}
           aria-label="Zoom cover image"
-          className="group relative block aspect-[16/9] w-full overflow-hidden rounded-card border border-hairline bg-surface-2"
+          className="group relative block aspect-[4/3] w-full overflow-hidden rounded-card border border-hairline bg-surface-2"
         >
           <Image
             src={cover}
             alt={title}
             fill
+            quality={90}
             sizes="(max-width:1024px) 100vw, 640px"
             className="object-contain"
             priority
@@ -52,7 +53,7 @@ export function Gallery({
           </span>
         </button>
       ) : (
-        <div className="flex aspect-[16/9] items-center justify-center rounded-card border border-hairline bg-surface-2 text-ink-faint">
+        <div className="flex aspect-[4/3] items-center justify-center rounded-card border border-hairline bg-surface-2 text-ink-faint">
           <Icon name="controller" size={48} />
         </div>
       )}
@@ -67,7 +68,7 @@ export function Gallery({
               aria-label={`Zoom screenshot ${i + 1}`}
               className="relative aspect-[16/9] overflow-hidden rounded-tile bg-surface-2 transition-[border-color] hover:ring-1 hover:ring-cyan"
             >
-              <Image src={src} alt="" fill sizes="160px" className="object-cover" />
+              <Image src={src} alt="" fill quality={90} sizes="160px" className="object-cover" />
             </button>
           ))}
         </div>
@@ -94,6 +95,7 @@ export function Gallery({
               alt={title}
               width={1600}
               height={900}
+              quality={90}
               className="mx-auto h-auto max-h-[85vh] w-auto rounded-card object-contain"
             />
           </div>

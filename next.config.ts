@@ -4,7 +4,12 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   images: {
     formats: ["image/avif", "image/webp"],
-    remotePatterns: [{ protocol: "https", hostname: "static.kinguin.net" }],
+    // Sharper renders for text-heavy key art; 75 (the default) looked soft.
+    qualities: [90],
+    remotePatterns: [
+      { protocol: "https", hostname: "static.kinguin.net" },
+      { protocol: "https", hostname: "images.kinguin.net" },
+    ],
   },
 };
 
