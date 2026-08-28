@@ -8,6 +8,20 @@ import { Icon } from "@/components/ui/Icon";
 
 const steps = ["Account", "About you", "Address", "Review"] as const;
 
+// Which step each field lives on, so a validation error can point the user back to it.
+const fieldStep: Record<string, number> = {
+  email: 0, password: 0,
+  firstName: 1, lastName: 1, phone: 1, dateOfBirth: 1,
+  street: 2, city: 2, postcode: 2, country: 2,
+  acceptTerms: 3,
+};
+const fieldLabel: Record<string, string> = {
+  email: "Email", password: "Password",
+  firstName: "First name", lastName: "Last name", phone: "Phone number", dateOfBirth: "Date of birth",
+  street: "Street", city: "City", postcode: "Postal code", country: "Country",
+  acceptTerms: "Terms and conditions",
+};
+
 const field =
   "h-11 w-full rounded-tile border border-hairline bg-surface-2 px-3.5 text-sm text-ink placeholder:text-ink-faint focus:border-cyan focus:outline-none";
 const labelCls = "mb-1.5 block text-xs font-medium text-ink-muted";
@@ -179,6 +193,34 @@ export function RegisterForm() {
           </label>
           {err("acceptTerms") && <p className="text-xs text-magenta">{err("acceptTerms")}</p>}
           {state.error && <p className="text-xs text-magenta">{state.error}</p>}
+
+          {/* Errors on earlier steps are otherwise hidden — surface them here so the
+              user knows why the account wasn't created and can jump back to fix it. */}
+          {(() => {
+            const problems = Object.entries(state.fieldErrors ?? {}).filter(
+              ([k]) => k !== "acceptTerms",
+            );
+            if (problems.length === 0) return null;
+            return (
+              <div className="rounded-tile border border-magenta/40 bg-magenta/10 p-3 text-xs text-magenta">
+                <p className="font-medium">Please fix these before creating your account:</p>
+                <ul className="mt-1.5 space-y-1">
+                  {problems.map(([k, message]) => (
+                    <li key={k}>
+                      <button
+                        type="button"
+                        onClick={() => setStep(fieldStep[k] ?? 0)}
+                        className="underline hover:no-underline"
+                      >
+                        {fieldLabel[k] ?? k}
+                      </button>
+                      {`: ${message}`}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })()}
         </div>
 
         <div className="mt-6 flex items-center justify-between gap-3">

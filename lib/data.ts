@@ -910,7 +910,7 @@ export const benefits = [
   {
     icon: "chat",
     title: "Support that answers",
-    body: "Real people on live chat 24/7, median first reply under four minutes.",
+    body: "Real people on email support 24/7, median first reply under four minutes.",
   },
 ];
 
@@ -962,12 +962,21 @@ export const faqs = [
 ];
 
 export const giftCards: { key: string; name: string; token: string; amounts: number[] }[] = [
-  { key: "steam", name: "Steam", token: "var(--ma-steam)", amounts: [10, 20, 50, 100] },
-  { key: "playstation", name: "PlayStation Store", token: "var(--ma-playstation)", amounts: [10, 25, 50, 100] },
-  { key: "xbox", name: "Xbox", token: "var(--ma-xbox)", amounts: [10, 25, 50] },
-  { key: "nintendo", name: "Nintendo eShop", token: "var(--ma-nintendo)", amounts: [15, 25, 50] },
+  { key: "steam", name: "Steam", token: "var(--ma-steam)", amounts: [5, 10, 20, 50, 100] },
+  { key: "playstation", name: "PlayStation Store", token: "var(--ma-playstation)", amounts: [10, 20, 25, 50, 100] },
+  { key: "xbox", name: "Xbox", token: "var(--ma-xbox)", amounts: [10, 15, 25, 50, 100] },
+  { key: "gamepass", name: "Xbox Game Pass", token: "var(--ma-xbox)", amounts: [15, 30, 45] },
+  { key: "psplus", name: "PlayStation Plus", token: "var(--ma-playstation)", amounts: [25, 40, 60] },
+  { key: "nintendo", name: "Nintendo eShop", token: "var(--ma-nintendo)", amounts: [15, 25, 50, 100] },
+  { key: "ea", name: "EA Play", token: "var(--ma-ea)", amounts: [15, 30, 50] },
   { key: "netflix", name: "Netflix", token: "#E50914", amounts: [15, 25, 50] },
-  { key: "roblox", name: "Roblox", token: "#00A2FF", amounts: [10, 25, 50] },
+  { key: "spotify", name: "Spotify", token: "#1DB954", amounts: [10, 30, 60] },
+  { key: "discord", name: "Discord Nitro", token: "#5865F2", amounts: [10, 20, 50] },
+  { key: "twitch", name: "Twitch", token: "#9146FF", amounts: [10, 25, 50] },
+  { key: "roblox", name: "Roblox", token: "#00A2FF", amounts: [10, 20, 25, 50] },
+  { key: "googleplay", name: "Google Play", token: "#34A853", amounts: [10, 25, 50, 100] },
+  { key: "appstore", name: "App Store & iTunes", token: "#B9BFD4", amounts: [15, 25, 50, 100] },
+  { key: "amazon", name: "Amazon", token: "#FF9900", amounts: [15, 25, 50, 100] },
   { key: "uber", name: "Uber", token: "#9CA3AF", amounts: [15, 25, 50] },
 ];
 
@@ -975,7 +984,6 @@ export const currencies = [
   { code: "EUR", symbol: "€", label: "Euro" },
   { code: "USD", symbol: "$", label: "US Dollar" },
   { code: "GBP", symbol: "£", label: "Pound Sterling" },
-  { code: "PLN", symbol: "zł", label: "Złoty" },
 ];
 
 export const footerColumns = [

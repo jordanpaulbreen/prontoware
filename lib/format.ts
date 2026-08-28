@@ -1,4 +1,4 @@
-export type CurrencyCode = "EUR" | "USD" | "GBP" | "PLN";
+export type CurrencyCode = "EUR" | "USD" | "GBP";
 
 /** Indicative rates — a real store would fetch these; the UI only needs shape. */
 export const rates: Record<CurrencyCode, { rate: number; symbol: string; suffix?: boolean }> =
@@ -6,7 +6,6 @@ export const rates: Record<CurrencyCode, { rate: number; symbol: string; suffix?
     EUR: { rate: 1, symbol: "€" },
     USD: { rate: 1.08, symbol: "$" },
     GBP: { rate: 0.85, symbol: "£" },
-    PLN: { rate: 4.31, symbol: " zł", suffix: true },
   };
 
 export function money(amount: number, code: CurrencyCode = "EUR"): string {

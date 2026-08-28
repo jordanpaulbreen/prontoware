@@ -25,7 +25,7 @@ export function FaqAccordion() {
             <Reveal delay={80}>
               <div className="rounded-card border border-hairline bg-card p-5">
                 <p className="text-sm leading-relaxed text-ink-muted">
-                  Still stuck? Live chat is open all night and answers in about four minutes.
+                  Still stuck? Our support team is online all night and answers in about four minutes.
                 </p>
                 <Button variant="outline" size="sm" className="mt-4" href="/support">
                   <Icon name="chat" size={15} />

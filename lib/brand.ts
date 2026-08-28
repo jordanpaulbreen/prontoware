@@ -25,7 +25,7 @@ export const company = {
 export const policy = {
   refundDays: 14,
   warrantyMonths: 12,
-  support: "24/7 live chat",
+  support: "24/7 email support",
   serviceFeePct: 0,
   deliveryTime: "under 60 seconds",
   currency: process.env.NEXT_PUBLIC_BASE_CURRENCY ?? "EUR",

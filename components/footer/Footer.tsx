@@ -17,7 +17,16 @@ const socials: { label: string; icon: "discord" | "chat" | "send" | "play"; href
   { label: "YouTube", icon: "play", href: "https://youtube.com/@prontowaregames" },
 ];
 
-const legal = ["Privacy", "Terms", "Cookies", "Refund Policy", "Imprint"];
+const legal = [
+  "Terms",
+  "Privacy",
+  "Cookies",
+  "Refund Policy",
+  "Digital Delivery",
+  "Complaints",
+  "Product-Specific Terms",
+  "Imprint",
+];
 
 export function Footer() {
   return (

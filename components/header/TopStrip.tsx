@@ -1,10 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { useCurrency, useTheme } from "@/components/providers/StoreProvider";
-import { currencies, promoStrip } from "@/lib/data";
-import type { CurrencyCode } from "@/lib/format";
-import { useEscapeKey, useOnClickOutside } from "@/lib/hooks";
+import { useTheme } from "@/components/providers/StoreProvider";
+import { promoStrip } from "@/lib/data";
 import { Icon } from "@/components/ui/Icon";
 
 /** Slim top strip: rotating promo, currency, theme. Hidden on small screens. */
@@ -27,7 +24,6 @@ export function TopStrip() {
             Activation guides
           </a>
           <span aria-hidden="true" className="mx-1 h-4 w-px bg-hairline" />
-          <CurrencySelect />
           <ThemeToggle />
         </div>
       </div>
@@ -55,66 +51,6 @@ function PromoRotator() {
           ))}
         </ul>
       </div>
-    </div>
-  );
-}
-
-function CurrencySelect() {
-  const { currency, setCurrency } = useCurrency();
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  useOnClickOutside(ref, () => setOpen(false), open);
-  useEscapeKey(() => setOpen(false), open);
-
-  const active = currencies.find((c) => c.code === currency)!;
-
-  return (
-    <div ref={ref} className="relative">
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        aria-expanded={open}
-        aria-haspopup="listbox"
-        className="press inline-flex items-center gap-1.5 rounded-tile px-2.5 py-1 text-xs font-medium text-ink-muted hover:bg-surface-2 hover:text-ink"
-      >
-        <Icon name="globe" size={13} />
-        {active.code}
-        <Icon
-          name="chevronDown"
-          size={12}
-          className={`transition-transform duration-[var(--ma-dur-base)] ${open ? "rotate-180" : ""}`}
-        />
-      </button>
-
-      {open && (
-        <ul
-          role="listbox"
-          aria-label="Select currency"
-          className="absolute right-0 top-full z-50 mt-2 w-44 animate-[panel-in_var(--ma-dur-base)_var(--ma-ease-arcade)] overflow-hidden rounded-tile border border-hairline bg-surface shadow-panel"
-        >
-          {currencies.map((option) => (
-            <li key={option.code} role="none">
-              <button
-                type="button"
-                role="option"
-                aria-selected={option.code === currency}
-                onClick={() => {
-                  setCurrency(option.code as CurrencyCode);
-                  setOpen(false);
-                }}
-                className={`flex w-full items-center justify-between px-3 py-2 text-xs transition-colors duration-[var(--ma-dur-fast)] hover:bg-card-hover ${
-                  option.code === currency ? "text-cyan" : "text-ink-muted"
-                }`}
-              >
-                <span>
-                  {option.code} · {option.label}
-                </span>
-                <span className="font-medium">{option.symbol.trim()}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
     </div>
   );
 }
